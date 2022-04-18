@@ -101,6 +101,12 @@ class ViewController: UIViewController {
             nextButton.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 130)
         ])
     }
+    override func present(_ viewControllerToPresent: UIViewController,
+                            animated flag: Bool,
+                            completion: (() -> Void)? = nil) {
+        viewControllerToPresent.modalPresentationStyle = .fullScreen
+        super.present(viewControllerToPresent, animated: flag, completion: completion)
+      }
     @objc func onePressed() {
         if ansSelected == false {
             incorrectN += 1
@@ -132,6 +138,7 @@ class ViewController: UIViewController {
     @objc func goToNextPage() {
         if ansSelected == true {
             present(SecondViewController(), animated: false)
+            ansSelected = false
         }
     }
 }
@@ -227,6 +234,12 @@ class SecondViewController: UIViewController {
             nextButton.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 130)
         ])
     }
+    override func present(_ viewControllerToPresent: UIViewController,
+                            animated flag: Bool,
+                            completion: (() -> Void)? = nil) {
+        viewControllerToPresent.modalPresentationStyle = .fullScreen
+        super.present(viewControllerToPresent, animated: flag, completion: completion)
+      }
     @objc func onePressed() {
         if ansSelected == false {
             incorrectN += 1
@@ -258,6 +271,7 @@ class SecondViewController: UIViewController {
     @objc func goToNextPage() {
         if ansSelected == true {
             present(ThirdViewController(), animated: false)
+            ansSelected = false
         }
     }
 }
@@ -353,6 +367,12 @@ class ThirdViewController: UIViewController {
             nextButton.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 130)
         ])
     }
+    override func present(_ viewControllerToPresent: UIViewController,
+                            animated flag: Bool,
+                            completion: (() -> Void)? = nil) {
+        viewControllerToPresent.modalPresentationStyle = .fullScreen
+        super.present(viewControllerToPresent, animated: flag, completion: completion)
+      }
     @objc func onePressed() {
         if ansSelected == false {
             incorrectN += 1
@@ -384,6 +404,7 @@ class ThirdViewController: UIViewController {
     @objc func goToNextPage() {
         if ansSelected == true {
             present(FourthViewController(), animated: false)
+            ansSelected = false
         }
     }
 }
@@ -479,6 +500,12 @@ class FourthViewController: UIViewController {
             nextButton.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 130)
         ])
     }
+    override func present(_ viewControllerToPresent: UIViewController,
+                            animated flag: Bool,
+                            completion: (() -> Void)? = nil) {
+        viewControllerToPresent.modalPresentationStyle = .fullScreen
+        super.present(viewControllerToPresent, animated: flag, completion: completion)
+      }
     @objc func onePressed() {
         if ansSelected == false {
             incorrectN += 1
@@ -510,6 +537,7 @@ class FourthViewController: UIViewController {
     @objc func goToNextPage() {
         if ansSelected == true {
             present(FifthViewController(), animated: false)
+            ansSelected = false
         }
     }
 }
@@ -605,6 +633,12 @@ class FifthViewController: UIViewController {
             nextButton.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 130)
         ])
     }
+    override func present(_ viewControllerToPresent: UIViewController,
+                            animated flag: Bool,
+                            completion: (() -> Void)? = nil) {
+        viewControllerToPresent.modalPresentationStyle = .fullScreen
+        super.present(viewControllerToPresent, animated: flag, completion: completion)
+      }
     @objc func onePressed() {
         if ansSelected == false {
             incorrectN += 1
@@ -636,6 +670,7 @@ class FifthViewController: UIViewController {
     @objc func goToNextPage() {
         if ansSelected == true {
             present(ResultsView(), animated: false)
+            ansSelected = false
         }
     }
 }
@@ -663,9 +698,33 @@ class ResultsView: UIViewController {
         results.textAlignment = .left
         results.text = "You got \(String(correctN)) correct and \(String(incorrectN))."
         view.addSubview(results)
-    }
-    @objc func startAgain(){
         
+        continueButton = UIButton()
+        continueButton.translatesAutoresizingMaskIntoConstraints = false
+        continueButton.setTitle("Start Again", for: .normal)
+        continueButton.setTitleColor(.black, for: .normal)
+        continueButton.addTarget(self, action: #selector(startAgain), for: .touchUpInside)
+        view.addSubview(continueButton)
+        
+        NSLayoutConstraint.activate([
+            message.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 150),
+            message.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 50),
+            results.topAnchor.constraint(equalTo: message.bottomAnchor),
+            results.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 50),
+            continueButton.topAnchor.constraint(equalTo: results.bottomAnchor, constant: 150),
+            continueButton.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 50)
+            ])
+    }
+    override func present(_ viewControllerToPresent: UIViewController,
+                            animated flag: Bool,
+                            completion: (() -> Void)? = nil) {
+        viewControllerToPresent.modalPresentationStyle = .fullScreen
+        super.present(viewControllerToPresent, animated: flag, completion: completion)
+      }
+    @objc func startAgain(){
+        correctN = 0
+        incorrectN = 0
+        present(ViewController(), animated: false)
     }
 }
 
